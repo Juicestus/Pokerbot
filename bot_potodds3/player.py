@@ -48,8 +48,8 @@ class Player(Bot):
             deck.shuffle()
             draw_number = 3 + (4 - len(board_cards))
             draw = deck.peek(draw_number)
-            opp_draw = draw[:2] # give the opp first 3
-            board_draw = draw[2:]  
+            opp_draw = draw[:3] # give the opp first 3
+            board_draw = draw[3:]  
             
             my_hand = my_cards + board_cards + board_draw
             opp_hand = opp_draw + board_cards + board_draw
@@ -101,7 +101,7 @@ class Player(Bot):
         # if random.random() < 0.25:
         #     return FoldAction()
         # return CallAction()  # If we can't raise, call if possible
-
+  
         continue_cost = opp_pip - my_pip  
 
         P_RAISE = 0.8

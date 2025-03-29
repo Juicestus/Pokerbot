@@ -17,7 +17,7 @@ def hand_strength(my_cards, board_cards, k):
         deck.shuffle()
         draw_number = 3 + (4 - len(board_cards))
         draw = deck.peek(draw_number)
-        print(draw)
+        # print(draw)
         opp_draw = draw[:k] # give the opp first 3
         board_draw = draw[k:]  
         
@@ -39,10 +39,13 @@ def hand_strength(my_cards, board_cards, k):
 
 if __name__ == '__main__':
     deck = eval7.Deck()
-    my_cards = [ ]
-    board_cards = ["Ah", "Qh","5h", "5d"]
-    x = hand_strength(my_cards, board_cards, 2)
-    print(x)
+    deck.shuffle()
+    draw = deck.peek(2)
+    my_cards = draw[:2]
+    board_cards = []
+    p1 = hand_strength(my_cards, board_cards, 2)    #incorrect
+    p2 = hand_strength(my_cards, board_cards, 3)    #correct
+    print(my_cards, p1, p2)
     
     
     
