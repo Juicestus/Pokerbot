@@ -306,7 +306,8 @@ class Player():
                 self.socketfile.close()
             except socket.timeout:
                 print('Timed out waiting for', self.name, 'to disconnect')
-            except OSError:
+            except OSError as k:
+                print(k)
                 print('Could not close socket connection with', self.name)
         if self.bot_subprocess is not None:
             try:
