@@ -106,7 +106,7 @@ class Player(Bot):
         pot_odds = continue_cost / (my_pip + opp_pip + 0.1)
 
         P_RAISE = 0.8
-        P_FOLD = 0.15
+        P_FOLD = 0.0
 
         if RaiseAction in legal_actions:
             min_raise, max_raise = round_state.raise_bounds()
@@ -122,9 +122,9 @@ class Player(Bot):
             return CheckAction()
         if random.random() < P_FOLD:
             return FoldAction()
-        if CallAction in legal_actions:
-            return CallAction()
-        return FoldAction()
+        # if CallAction in legal_actions:
+        return CallAction()
+        # return FoldAction()
             
 
 

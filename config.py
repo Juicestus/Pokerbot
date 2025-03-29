@@ -1,10 +1,10 @@
 # PARAMETERS TO CONTROL THE BEHAVIOR OF THE GAME ENGINE
 # DO NOT REMOVE OR RENAME THIS FILE
-PLAYER_1_NAME = "Main"
-PLAYER_1_PATH = "./bot_main"
+PLAYER_1_NAME = "PotOdds3"
+PLAYER_1_PATH = "./bot_potodds3"
 # NO TRAILING SLASHES ARE ALLOWED IN PATHS
-PLAYER_2_NAME = "AllIn"
-PLAYER_2_PATH = "./bot_allin"  # Change this to './player_chatbot' to interact with your own bot!
+PLAYER_2_NAME = "Claude"
+PLAYER_2_PATH = "./bot_claude"  
 # GAME PROGRESS IS RECORDED HERE
 GAME_LOG_FILENAME = "gamelog"
 # PLAYER_LOG_SIZE_LIMIT IS IN BYTES

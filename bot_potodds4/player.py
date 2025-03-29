@@ -89,42 +89,24 @@ class Player(Bot):
         # my_contribution = STARTING_STACK - my_stack  # the number of chips you have contributed to the pot
         # opp_contribution = STARTING_STACK - opp_stack  # the number of chips your opponent has contributed to the pot
 
-        # if RaiseAction in legal_actions:
-        #    min_raise, max_raise = round_state.raise_bounds()  # the smallest and largest numbers of chips for a legal bet/raise
-        #    min_cost = min_raise - my_pip  # the cost of a minimum bet/raise
-        #    max_cost = max_raise - my_pip  # the cost of a maximum bet/raise
-        # if RaiseAction in legal_actions:
-        #     if random.random() < 0.5:
-        #         return RaiseAction(min_raise)
-        # if CheckAction in legal_actions:  # check-call
-        #     return CheckAction()
-        # if random.random() < 0.25:
-        #     return FoldAction()
-        # return CallAction()  # If we can't raise, call if possible
-
         continue_cost = opp_pip - my_pip  
-        pot_odds = continue_cost / (my_pip + opp_pip + 0.1)
-
         P_RAISE = 0.8
-        P_FOLD = 0.15
 
+        pot_odds = continue_cost / (my_pip + opp_pip + 0.1)
+        strength = self.hand_strength(my_cards, board_cards)
+
+        if strength < 0.40:
+            return FoldAction()
         if RaiseAction in legal_actions:
             min_raise, max_raise = round_state.raise_bounds()
             continue_cost = opp_pip - my_pip  
-            pot_odds = continue_cost / (my_pip + opp_pip + 0.1)
-            strength = self.hand_strength(my_cards, board_cards)
             if random.random() < P_RAISE:
                 if strength > 2 * pot_odds:
                     raise_amount = int(min_raise + 0.1 * (max_raise - min_raise))
                     return RaiseAction(raise_amount)
-                return RaiseAction(min_raise)
         if CheckAction in legal_actions: 
             return CheckAction()
-        if random.random() < P_FOLD:
-            return FoldAction()
-        if CallAction in legal_actions:
-            return CallAction()
-        return FoldAction()
+        return CallAction()
             
 
 

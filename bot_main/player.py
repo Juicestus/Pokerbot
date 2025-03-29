@@ -10,7 +10,15 @@ from skeleton.runner import parse_args, run_bot
 import random
 import utils
 
+# DEBUG ONLY
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
+import matplotlib.pyplot as plt
+# ^ REMOVE FOR FINAL
+
 import p0, p1, p2   
+
+
 
 BOTS = {
     "Skeleton": p0.Player,
@@ -48,7 +56,10 @@ class Player(Bot):      # THIS IS THE BANDIT
         
         #if game_state.round_num <= 0.2 * NUM_ROUNDS:           # biphasic approach
 
-        if random.random() <= min(10/self.n_rounds, 1):         #  eplison greedy
+        P_RANDOM = 0.2
+
+        if random.random() <= min(25/self.n_rounds, 1):         #  eplison greedy
+        # if random.random() <= P_RANDOM:
             current_bot_index = utils.randint(self.n_bots)  # random bot
         else:
             current_bot_index = utils.argmax(self.score)           # empirically best bot
@@ -77,15 +88,20 @@ class Player(Bot):      # THIS IS THE BANDIT
         current_bot_history.append(my_delta)
         self.score[self.current_bot_index] = utils.mean(current_bot_history)
 
-        # visualize actions at end of match
-        if game_state.round_num == NUM_ROUNDS:
-            plt.figure(figsize=(10, 3))
-            plt.scatter(range(NUM_ROUNDS), self.chosen_bots, marker="|", alpha=0.4)
-            plt.xlabel("Step")
-            plt.ylabel("Chosen Bot")
-            plt.title("Bandit Bot: Chosen Bots Over Time")
-            plt.yticks(range(self.n_bots), labels=[f"{self.botnames[i]}" for i in range(self.n_bots)])
-            plt.savefig("../epsilon_greedy.png")
+
+        # DEBUG ONLY: visualize actions at end of match
+        try:
+            if game_state.round_num == NUM_ROUNDS:
+                plt.figure(figsize=(10, 3))
+                plt.scatter(range(NUM_ROUNDS), self.chosen_bots, marker="|", alpha=0.4)
+                plt.xlabel("Step")
+                plt.ylabel("Chosen Bot")
+                plt.title("Bandit Bot: Chosen Bots Over Time")
+                plt.yticks(range(self.n_bots), labels=[f"{self.bot_names[i]}" for i in range(self.n_bots)])
+                plt.savefig("../epsilon_greedy.png")
+        except Exception as e:
+            print("Plot errored out: ", e)
+            
 
     def get_action(self, game_state, round_state, active):
         '''

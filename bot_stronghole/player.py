@@ -113,11 +113,11 @@ class Player(Bot):
             if random.random() < P_BLUFF:
                 return RaiseAction(min_raise)
 
-        if random.random() < P_FOLD:
-            return FoldAction()
-        
         if CheckAction in legal_actions:
             return CheckAction()
+        
+        if random.random() < P_FOLD:
+            return FoldAction()
         
         return CallAction()
 

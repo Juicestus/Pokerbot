@@ -306,8 +306,7 @@ class Player():
                 self.socketfile.close()
             except socket.timeout:
                 print('Timed out waiting for', self.name, 'to disconnect')
-            except OSError as k:
-                print(k)
+            except OSError:
                 print('Could not close socket connection with', self.name)
         if self.bot_subprocess is not None:
             try:
@@ -532,3 +531,7 @@ class Game():
 
 if __name__ == '__main__':
     Game().run()
+    
+    # MODIFICATIONS BELOW -- FOR LOGGING
+    from graph import graph_results
+    graph_results()

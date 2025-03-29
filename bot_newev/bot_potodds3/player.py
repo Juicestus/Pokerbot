@@ -14,6 +14,11 @@ class Player(Bot):
 
     def __init__(self): # Called when a new game starts. Called exactly once.
 
+        self.rounds_played = 0
+        self.opponent_calls = 0
+        self.opponent_raises = 0
+        self.opponent_folds = 0
+
         pass
 
     def handle_new_round(self, game_state, round_state, active):            
@@ -102,29 +107,47 @@ class Player(Bot):
         #     return FoldAction()
         # return CallAction()  # If we can't raise, call if possible
 
-        continue_cost = opp_pip - my_pip  
-        pot_odds = continue_cost / (my_pip + opp_pip + 0.1)
 
-        P_RAISE = 0.8
-        P_FOLD = 0.15
+        strength = self.hand_strength(my_cards, board_cards)
 
-        if RaiseAction in legal_actions:
-            min_raise, max_raise = round_state.raise_bounds()
-            continue_cost = opp_pip - my_pip  
-            pot_odds = continue_cost / (my_pip + opp_pip + 0.1)
-            strength = self.hand_strength(my_cards, board_cards)
-            if random.random() < P_RAISE:
-                if strength > 2 * pot_odds:
-                    raise_amount = int(min_raise + 0.1 * (max_raise - min_raise))
-                    return RaiseAction(raise_amount)
-                return RaiseAction(min_raise)
-        if CheckAction in legal_actions: 
-            return CheckAction()
-        if random.random() < P_FOLD:
-            return FoldAction()
-        if CallAction in legal_actions:
-            return CallAction()
-        return FoldAction()
+        print(strength)
+
+
+
+        stand_to_gain = strength * opp_pip * 2
+        stand_to_lose = (1 - strength) * my_pip
+
+        # EV_call = strength * opp_pip * 2 - (1 - strength) * my_pip
+        # EV_raise = strength * (opp_pip + my_pip + raise_amount) - (1 - strength) * my_pip
+
+        return CallAction()
+
+
+
+
+        # continue_cost = opp_pip - my_pip  
+
+        # P_RAISE = 0.8
+        # P_FOLD = 0.0
+        # P_BLUFF = 0.15
+
+        # if RaiseAction in legal_actions:
+        #     min_raise, max_raise = round_state.raise_bounds()
+        #     continue_cost = opp_pip - my_pip  
+        #     pot_odds = continue_cost / (my_pip + opp_pip + 0.1)
+        #     strength = self.hand_strength(my_cards, board_cards)
+        #     if random.random() < P_RAISE:
+        #         if strength > 2 * pot_odds:
+        #             raise_amount = int(min_raise + 0.1 * (max_raise - min_raise))
+        #             return RaiseAction(raise_amount)
+        #         # return RaiseAction(min_raise)
+        # if CheckAction in legal_actions: 
+        #     return CheckAction()
+        # if random.random() < P_FOLD:
+        #     return FoldAction()
+        # # if CallAction in legal_actions:
+        # return CallAction()
+        # # return FoldAction()
             
 
 
