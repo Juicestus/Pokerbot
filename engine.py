@@ -530,7 +530,11 @@ class Game():
 
 
 if __name__ == '__main__':
+
+    # Time the game, and print it
+    start = time.time()
     Game().run()
+    print(f"Game took {time.time() - start} seconds")
     
     # MODIFICATIONS BELOW -- FOR LOGGING
     from graph import graph_results
