@@ -5,7 +5,7 @@ import eval7
 def hand_strength(my_cards, board_cards, k):
     # assert len(board_cards) in [0, 2, 4]
     
-    MC_ITER = 100
+    MC_ITER = 1000
     #my_cards = [eval7.Card(card) for card in my_cards]
     #board_cards = [eval7.Card(card) for card in board_cards]
     deck = eval7.Deck()

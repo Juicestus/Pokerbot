@@ -37,7 +37,7 @@ class Player(Bot):
     # using the win rate of the hand
     def hand_strength(self, my_cards, board_cards):
         # assert len(board_cards) in [0, 2, 4]
-        MC_ITER = 100
+        MC_ITER = 1000
         my_cards = [eval7.Card(card) for card in my_cards]
         board_cards = [eval7.Card(card) for card in board_cards]
         deck = eval7.Deck()
